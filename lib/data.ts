@@ -140,6 +140,7 @@ export const projects: Project[] = [
 
 export type Certification = {
   name: string;
+  shortName: string;
   issuer: string;
   date: string;
   featured?: boolean;
@@ -149,6 +150,7 @@ export type Certification = {
 export const certifications: Certification[] = [
   {
     name: "CNCF Kubestronaut",
+    shortName: "K8s★",
     issuer: "Linux Foundation",
     date: "Feb 2025",
     featured: true,
@@ -156,69 +158,140 @@ export const certifications: Certification[] = [
   },
   {
     name: "Certified Kubernetes Administrator (CKA)",
+    shortName: "CKA",
     issuer: "Linux Foundation",
     date: "Sept 2025",
     color: "blue",
   },
   {
     name: "Certified Kubernetes Application Developer (CKAD)",
+    shortName: "CKAD",
     issuer: "Linux Foundation",
     date: "Feb 2025",
     color: "blue",
   },
   {
     name: "Certified Kubernetes and Cloud Native Associate (KCNA)",
+    shortName: "KCNA",
     issuer: "Linux Foundation",
     date: "Feb 2025",
     color: "blue",
   },
   {
     name: "Certified Kubernetes Security Specialist (CKS)",
+    shortName: "CKS",
     issuer: "Linux Foundation",
     date: "Jan 2026",
     color: "blue",
   },
   {
     name: "Certified Kubernetes Security Associate (KCSA)",
+    shortName: "KCSA",
     issuer: "Linux Foundation",
     date: "Jan 2026",
     color: "blue",
   },
   {
     name: "AWS Certified Solutions Architect – Associate",
+    shortName: "AWS SAA",
     issuer: "Amazon Web Services",
     date: "Dec 2024",
     color: "orange",
   },
   {
     name: "HashiCorp Certified: Terraform Associate",
+    shortName: "TF Assoc",
     issuer: "HashiCorp",
     date: "Dec 2025",
     color: "purple",
   },
   {
     name: "Microsoft Azure Fundamentals (AZ-900)",
+    shortName: "AZ-900",
     issuer: "Microsoft",
     date: "Apr 2022",
     color: "sky",
   },
   {
     name: "Japanese Language Proficiency Test (JLPT N3)",
+    shortName: "JLPT N3",
     issuer: "Japan Educational Exchanges and Services",
     date: "Jan 2022",
     color: "red",
   },
   {
     name: "IT Passport (IP) Exam — ITPEC",
+    shortName: "IP",
     issuer: "ITPEC, Japan",
     date: "Jan 2019",
     color: "gray",
   },
   {
     name: "Fundamental Engineering (FE) Exam — ITPEC",
+    shortName: "FE",
     issuer: "ITPEC, Japan",
     date: "Jan 2019",
     color: "gray",
+  },
+];
+
+export type RoadmapMilestone = {
+  year: string;
+  title: string;
+  subtitle: string;
+  status: "done" | "current" | "future";
+  highlight?: boolean;
+};
+
+export const roadmap: RoadmapMilestone[] = [
+  {
+    year: "2021",
+    title: "B.C.Sc Graduate",
+    subtitle: "University of Information Technology — High Performance Computing",
+    status: "done",
+  },
+  {
+    year: "2022",
+    title: "Cloud Support Engineer",
+    subtitle: "KBTC Group of Companies — Azure administration & team training",
+    status: "done",
+  },
+  {
+    year: "Dec 2024",
+    title: "DevOps & Cloud Engineer Trainee",
+    subtitle: "HelloCloud.io, Singapore — AWS · Kubernetes · Terraform · CI/CD",
+    status: "done",
+  },
+  {
+    year: "Dec 2024",
+    title: "AWS Solutions Architect – Associate",
+    subtitle: "Certified by Amazon Web Services",
+    status: "done",
+  },
+  {
+    year: "Jan 2025",
+    title: "AIT Master's Program",
+    subtitle: "Master of Computer Science — Asian Institute of Technology, Bangkok",
+    status: "current",
+  },
+  {
+    year: "Feb 2025",
+    title: "CNCF Kubestronaut",
+    subtitle: "All 5 Kubernetes certifications — fewer than 1,000 holders globally",
+    status: "current",
+    highlight: true,
+  },
+  {
+    year: "2026",
+    title: "Senior Cloud / Platform Engineer",
+    subtitle: "Target: full-time SRE or Platform Engineering role",
+    status: "future",
+  },
+  {
+    year: "2027+",
+    title: "Cloud Architect",
+    subtitle: "Multi-cloud architecture design and infrastructure leadership",
+    status: "future",
   },
 ];
 

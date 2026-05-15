@@ -2,14 +2,25 @@ import { Award, Star } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { certifications } from "@/lib/data";
 
-const colorMap: Record<string, { bg: string; text: string; border: string }> = {
-  blue:   { bg: "bg-accent",           text: "text-accent-foreground", border: "border-border" },
-  orange: { bg: "bg-orange-900/30",    text: "text-orange-400",        border: "border-orange-800/40" },
-  purple: { bg: "bg-purple-900/30",    text: "text-purple-400",        border: "border-purple-800/40" },
-  sky:    { bg: "bg-sky-900/30",       text: "text-sky-400",           border: "border-sky-800/40" },
-  red:    { bg: "bg-red-900/30",       text: "text-red-400",           border: "border-red-800/40" },
-  gray:   { bg: "bg-muted",            text: "text-muted-foreground",  border: "border-border" },
+const colorMap: Record<string, { bg: string; text: string; border: string; logo: string }> = {
+  blue:   { bg: "bg-accent",           text: "text-accent-foreground", border: "border-border",          logo: "bg-blue-900/40 border-blue-700/30 text-blue-300" },
+  orange: { bg: "bg-orange-900/30",    text: "text-orange-400",        border: "border-orange-800/40",   logo: "bg-orange-900/40 border-orange-700/30 text-orange-300" },
+  purple: { bg: "bg-purple-900/30",    text: "text-purple-400",        border: "border-purple-800/40",   logo: "bg-purple-900/40 border-purple-700/30 text-purple-300" },
+  sky:    { bg: "bg-sky-900/30",       text: "text-sky-400",           border: "border-sky-800/40",      logo: "bg-sky-900/40 border-sky-700/30 text-sky-300" },
+  red:    { bg: "bg-red-900/30",       text: "text-red-400",           border: "border-red-800/40",      logo: "bg-red-900/40 border-red-700/30 text-red-300" },
+  gray:   { bg: "bg-muted",            text: "text-muted-foreground",  border: "border-border",          logo: "bg-muted border-border text-muted-foreground" },
 };
+
+/* Logo placeholder — replace the inner content with <Image src="…" /> when ready */
+function LogoPlaceholder({ shortName, className }: { shortName: string; className: string }) {
+  return (
+    <div
+      className={`flex items-center justify-center rounded-lg border border-dashed text-[10px] font-mono font-semibold leading-tight text-center ${className}`}
+    >
+      {shortName}
+    </div>
+  );
+}
 
 export function Certifications() {
   const featured = certifications.find((c) => c.featured);
@@ -34,9 +45,15 @@ export function Certifications() {
               <div className="absolute -bottom-12 -left-8 size-56 rounded-full bg-white/5" />
 
               <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
-                <div className="flex items-center justify-center size-20 rounded-2xl bg-white/10 shrink-0">
-                  <Star className="size-10 text-yellow-300 fill-yellow-300" />
+                {/* Logo placeholder (featured) */}
+                <div className="shrink-0 flex flex-col items-center gap-2">
+                  <div className="flex items-center justify-center size-20 rounded-2xl bg-white/10 border border-dashed border-white/20">
+                    {/* Swap this div with <Image src="/logos/kubestronaut.png" …/> when ready */}
+                    <Star className="size-10 text-yellow-300 fill-yellow-300" />
+                  </div>
+                  <span className="text-[9px] font-mono text-blue-200/60 tracking-wider">LOGO HERE</span>
                 </div>
+
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-semibold uppercase tracking-widest text-blue-200">
@@ -62,18 +79,26 @@ export function Certifications() {
             <p className="text-xs font-semibold uppercase tracking-widest text-accent-foreground mb-3">
               Kubernetes Certifications — All 5
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {rest
                 .filter((c) => c.color === "blue")
                 .map((c) => (
-                  <span
+                  <div
                     key={c.name}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-card text-accent-foreground border border-border"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-card border border-border"
                   >
-                    <Award className="size-3.5 shrink-0" />
-                    {c.name.replace(/Certified /g, "").split(" (")[0]}
-                    <span className="text-blue-400 text-xs">· {c.date}</span>
-                  </span>
+                    {/* K8s cert logo placeholder */}
+                    <LogoPlaceholder
+                      shortName={c.shortName}
+                      className="w-9 h-9 bg-blue-900/40 border-blue-700/30 text-blue-300"
+                    />
+                    <div>
+                      <p className="text-xs font-semibold text-accent-foreground leading-none">
+                        {c.name.replace(/Certified /g, "").split(" (")[0]}
+                      </p>
+                      <p className="text-[10px] text-blue-400 mt-0.5">{c.date}</p>
+                    </div>
+                  </div>
                 ))}
             </div>
           </div>
@@ -86,12 +111,16 @@ export function Certifications() {
             .map((cert, i) => {
               const colors = colorMap[cert.color] ?? colorMap.gray;
               return (
-                <Reveal key={cert.name} delay={0.1 + i * 0.04}>
+                <Reveal key={cert.name} delay={0.1 + i * 0.06}>
                   <div
                     className={`flex items-start gap-3 p-4 rounded-xl border ${colors.bg} ${colors.border}`}
                   >
-                    <Award className={`size-5 mt-0.5 shrink-0 ${colors.text}`} />
-                    <div>
+                    {/* Logo placeholder per card */}
+                    <LogoPlaceholder
+                      shortName={cert.shortName}
+                      className={`w-12 h-12 shrink-0 ${colors.logo}`}
+                    />
+                    <div className="min-w-0">
                       <p className={`text-sm font-semibold leading-snug ${colors.text}`}>
                         {cert.name}
                       </p>

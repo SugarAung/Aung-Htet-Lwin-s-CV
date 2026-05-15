@@ -1,76 +1,105 @@
-import Image from "next/image";
+"use client";
+
 import { MapPin, Download, Mail } from "lucide-react";
+import { motion } from "motion/react";
 import { personalInfo } from "@/lib/data";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center pt-16 pb-20 px-4 sm:px-6 lg:px-8"
+      className="relative min-h-screen flex items-center overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Text */}
-          <div className="order-2 lg:order-1 flex flex-col gap-6">
-            {/* Role badge */}
-            <span className="inline-flex items-center w-fit px-3 py-1 rounded-full text-xs font-medium bg-accent text-accent-foreground border border-border">
+      {/* Background video — simple loop, no JS needed */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay — fades in at 3s as video "becomes background" */}
+      <motion.div
+        className="absolute inset-0 bg-black/60"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeInOut", delay: 3.0 }}
+      />
+
+      {/* Content — each element stagger-reveals starting at 3s */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+        <div className="max-w-3xl flex flex-col gap-6">
+
+          {/* Role badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 3.0 }}
+          >
+            <span className="inline-flex items-center w-fit px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 border border-white/20 backdrop-blur-sm">
               {personalInfo.role}
             </span>
+          </motion.div>
 
-            {/* Name */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight tracking-tight">
-              {personalInfo.name}
-            </h1>
+          {/* Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 3.2 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight"
+          >
+            {personalInfo.name}
+          </motion.h1>
 
-            {/* Tagline */}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-              {personalInfo.tagline}
-            </p>
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 3.5 }}
+            className="text-lg sm:text-xl text-white/75 leading-relaxed max-w-xl"
+          >
+            {personalInfo.tagline}
+          </motion.p>
 
-            {/* Location */}
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-4 shrink-0" />
-              <span>{personalInfo.location}</span>
-            </div>
+          {/* Location */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 3.7 }}
+            className="flex items-center gap-1.5 text-sm text-white/60"
+          >
+            <MapPin className="size-4 shrink-0" />
+            <span>{personalInfo.location}</span>
+          </motion.div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-              >
-                <Mail className="size-4" />
-                Contact Me
-              </a>
-              <a
-                href="/cv.pdf"
-                download
-                className="inline-flex items-center gap-2 h-11 px-6 rounded-lg border border-border bg-card text-foreground text-sm font-medium hover:bg-muted transition-colors"
-              >
-                <Download className="size-4" />
-                Download CV
-              </a>
-            </div>
-          </div>
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 3.9 }}
+            className="flex flex-wrap gap-3 pt-2"
+          >
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Mail className="size-4" />
+              Contact Me
+            </a>
+            <a
+              href="/cv.pdf"
+              download
+              className="inline-flex items-center gap-2 h-11 px-6 rounded-lg border border-white/20 bg-white/10 text-white text-sm font-medium hover:bg-white/20 backdrop-blur-sm transition-colors"
+            >
+              <Download className="size-4" />
+              Download CV
+            </a>
+          </motion.div>
 
-          {/* Photo */}
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative">
-              <div className="w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-card shadow-xl ring-1 ring-border">
-                <Image
-                  src="/photo.jpg"
-                  alt={personalInfo.name}
-                  width={320}
-                  height={320}
-                  className="object-cover w-full h-full"
-                  priority
-                />
-              </div>
-              {/* Decorative ring */}
-              <div className="absolute -inset-3 rounded-full border-2 border-primary/20 -z-10" />
-              <div className="absolute -inset-6 rounded-full border border-primary/10 -z-10" />
-            </div>
-          </div>
         </div>
       </div>
     </section>

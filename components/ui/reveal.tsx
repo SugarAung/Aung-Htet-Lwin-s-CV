@@ -19,7 +19,7 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, ease: "easeOut", delay }}
+      transition={{ duration: 0.8, ease: "easeOut", delay }}
       className={cn(className)}
     >
       {children}
