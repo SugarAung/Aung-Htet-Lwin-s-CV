@@ -1,17 +1,43 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { MapPin, Download, Mail } from "lucide-react";
 import { motion } from "motion/react";
 import { personalInfo } from "@/lib/data";
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Fade the video out at the end and back in at the start of each loop
+    // to mask the browser's hard seek from last frame → frame 0
+    video.style.transition = "opacity 0.8s ease-in-out";
+
+    const onTimeUpdate = () => {
+      if (!video.duration) return;
+      const remaining = video.duration - video.currentTime;
+      if (remaining < 0.8) {
+        video.style.opacity = "0";
+      } else if (video.currentTime < 0.8) {
+        video.style.opacity = "1";
+      }
+    };
+
+    video.addEventListener("timeupdate", onTimeUpdate);
+    return () => video.removeEventListener("timeupdate", onTimeUpdate);
+  }, []);
+
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background video — simple loop, no JS needed */}
+      {/* Background video */}
       <video
+        ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
         loop
